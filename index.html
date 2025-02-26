@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html lang
+<html lang="en">
 
 <head>
-    <meta charset
-    <meta name
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线音乐播放器</title>
 </head>
 
 <body>
     <!-- 音乐播放器 -->
     <audio controls>
         <!-- 替换为你的音乐文件在 GitHub 上的链接 -->
-        <source src
+        <source src="https://raw.githubusercontent.com/wanpinhuan/online-music-player/main/我要的不是雪 - 余子林.mp3" type="audio/mpeg">
         你的浏览器不支持音频播放。
-    <
+    </audio>
 
     <!-- 显示歌词 -->
-    <pre id<
+    <pre id="lyrics"></pre>
 
     <script>
         // 获取歌词文件
-        const lyricsUrl'https://raw.githubusercontent.com/wanpinhuan/online-music-player/main/我要的不是雪 - 余子林.lrc'
+        const lyricsUrl = 'https://raw.githubusercontent.com/wanpinhuan/online-music-player/main/我要的不是雪 - 余子林.lrc';
         fetch(lyricsUrl)
-then(responseresponsetext())
-then(data{
-                const lyricsElementdocumentgetElementById('lyrics')
-                lyricsElementtextContentdata
+          .then(response => response.text())
+          .then(data => {
+                const lyricsElement = document.getElementById('lyrics');
+                lyricsElement.textContent = data;
             })
-catch(errorconsoleerror('获取歌词失败:'))
+          .catch(error => console.error('获取歌词失败:', error));
     </script>
 </body>
 
-    </html>
+</html>
