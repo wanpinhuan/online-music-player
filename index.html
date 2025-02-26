@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang
+
+<head>
+    <meta charset
+    <meta name
+    <title></title>
+</head>
+
+<body>
+    <!-- 音乐播放器 -->
+    <audio controls>
+        <!-- 替换为你的音乐文件在 GitHub 上的链接 -->
+        <source src
+        你的浏览器不支持音频播放。
+    <
+
+    <!-- 显示歌词 -->
+    <pre id<
+
+    <script>
+        // 获取歌词文件
+        const lyricsUrl'https://raw.githubusercontent.com/wanpinhuan/online-music-player/main/我要的不是雪 - 余子林.lrc'
+        fetch(lyricsUrl)
+then(responseresponsetext())
+then(data{
+                const lyricsElementdocumentgetElementById('lyrics')
+                lyricsElementtextContentdata
+            })
+catch(errorconsoleerror('获取歌词失败:'))
+    </script>
+</body>
+
+    </html>
