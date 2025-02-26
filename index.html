@@ -9,25 +9,89 @@
 
 <body>
     <!-- 音乐播放器 -->
-    <audio controls>
-        <!-- 替换为你的音乐文件在 GitHub 上的链接 -->
-        <source src="https://raw.githubusercontent.com/wanpinhuan/online-music-player/main/我要的不是雪 - 余子林.mp3" type="audio/mpeg">
+    <audio id="audioPlayer" controls autoplay>
+        <!-- 第一首歌曲 -->
+        <source id="song1Source" src="https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/Right Here Waiting.mp3" type="audio/mpeg">
         你的浏览器不支持音频播放。
     </audio>
+
+    <!-- 歌曲选择列表 -->
+    <select id="songSelector">
+        <option value="1">1 Right Here Waiting</option>
+        <option value="2">2 我要的不是雪_余子林</option>
+        <option value="3">3 听悲伤的情歌 - 苏星婕</option>
+        <option value="4">4 相见恨晚 - 彭佳慧</option>
+        <option value="5">5 飞鸟和蝉 - 任然</option>
+        <option value="6">歌曲 6</option>
+    </select>
 
     <!-- 显示歌词 -->
     <pre id="lyrics"></pre>
 
     <script>
-        // 获取歌词文件
-        const lyricsUrl = 'https://raw.githubusercontent.com/wanpinhuan/online-music-player/main/我要的不是雪 - 余子林.lrc';
-        fetch(lyricsUrl)
-          .then(response => response.text())
-          .then(data => {
-                const lyricsElement = document.getElementById('lyrics');
-                lyricsElement.textContent = data;
-            })
-          .catch(error => console.error('获取歌词失败:', error));
+        // 歌曲和歌词的数组，这里需要替换为实际的歌曲和歌词链接
+        const songs = [
+            {
+                songUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/Right Here Waiting.mp3",
+                lyricsUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/Right Here Waiting.lrc"
+            },
+            {
+                songUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/我要的不是雪_余子林.mp3",
+                lyricsUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/我要的不是雪_余子林.lrc"
+            },
+            {
+                songUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/听悲伤的情歌 - 苏星婕.mp3",
+                lyricsUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/听悲伤的情歌 - 苏星婕.lrc"
+            },
+            {
+                songUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/相见恨晚 - 彭佳慧.mp3",
+                lyricsUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/相见恨晚 - 彭佳慧.lrc"
+            },
+            {
+                songUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/飞鸟和蝉 - 任然.mp3",
+                lyricsUrl: "https://raw.githubusercontent.com/wanpinhuan/online-music-player/refs/heads/main/飞鸟和蝉 - 任然.lrc"
+            },
+            {
+                songUrl: "song6.mp3",
+                lyricsUrl: "lyrics6.lrc"
+            }
+        ];
+
+        const audioPlayer = document.getElementById('audioPlayer');
+        const songSelector = document.getElementById('songSelector');
+        const lyricsElement = document.getElementById('lyrics');
+
+        // 切换歌曲的函数
+        function changeSong(songIndex) {
+            const song = songs[songIndex - 1];
+            const source = document.getElementById('song1Source');
+            source.src = song.songUrl;
+            audioPlayer.load();
+
+            // 监听音频加载完成事件，加载完成后自动播放
+            audioPlayer.addEventListener('canplaythrough', function () {
+                audioPlayer.play().catch(error => {
+                    console.error('自动播放失败:', error);
+                });
+            }, { once: true });
+
+            // 获取并显示歌词
+            fetch(song.lyricsUrl)
+              .then(response => response.text())
+              .then(data => {
+                    lyricsElement.textContent = data;
+                })
+              .catch(error => console.error('获取歌词失败:', error));
+        }
+
+        // 监听歌曲选择事件
+        songSelector.addEventListener('change', function () {
+            const selectedSongIndex = parseInt(this.value);
+            changeSong(selectedSongIndex);
+        });
+
+        // 初始加载第一首歌曲的歌词
+        changeSong(1);
     </script>
 </body>
 
